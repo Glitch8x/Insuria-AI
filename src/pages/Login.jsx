@@ -4,6 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Button from '../components/ui/Button';
 import Card from '../components/ui/Card';
+import logo from '../assets/logo.jpg';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -78,11 +79,15 @@ const Login = () => {
                 >
                     <motion.div variants={itemVariants} className="text-center mb-8">
                         <motion.div
-                            whileHover={{ scale: 1.05, rotate: 5 }}
+                            whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
-                            className="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center shadow-inner mx-auto mb-4"
+                            className="w-20 h-20 bg-green-50 rounded-2xl flex items-center justify-center shadow-inner mx-auto mb-4 overflow-hidden"
                         >
-                            <ShieldCheck className="text-green-600 w-9 h-9" />
+                            <img
+                                src={logo}
+                                alt="Insuria Logo"
+                                className="w-full h-full object-contain mix-blend-multiply"
+                            />
                         </motion.div>
                         <h1 className="text-3xl font-bold text-slate-800 tracking-tight">Welcome Back</h1>
                         <p className="text-slate-500 mt-2">Sign in to your Insuria account</p>
