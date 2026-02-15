@@ -1,9 +1,11 @@
 import Groq from "groq-sdk";
 
-const groq = new Groq({
-    apiKey: import.meta.env.VITE_GROQ_API_KEY,
-    dangerouslyAllowBrowser: true, // Required for client-side API calls
-});
+const apiKey = import.meta.env.VITE_GROQ_API_KEY;
+
+const groq = apiKey ? new Groq({
+    apiKey: apiKey,
+    dangerouslyAllowBrowser: true,
+}) : null;
 
 /**
  * Fetches a response from Groq based on user message and selected language.
@@ -12,6 +14,10 @@ const groq = new Groq({
  * @returns {Promise<string>} - The AI generated response.
  */
 export const getGroqResponse = async (userMessage, language = 'English') => {
+    if (!groq) {
+        console.warn("Groq client not initialized (missing API key).");
+        return "I'm currently in 'offline mode' because my API key is missing. Please check the environment variables.";
+    }
     try {
         const chatCompletion = await groq.chat.completions.create({
             messages: [
@@ -49,6 +55,9 @@ export const getGroqResponse = async (userMessage, language = 'English') => {
  * @returns {Promise<Object>} - The analysis result in JSON format.
  */
 export const analyzeDamage = async (imageBase64) => {
+    if (!groq) {
+        throw new Error("Groq client not initialized for vision analysis.");
+    }
     try {
         const chatCompletion = await groq.chat.completions.create({
             messages: [
